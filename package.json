@@ -1,0 +1,50 @@
+{
+  "name": "akbars-academy-website",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Professional IT training institute landing page with course enrollment system",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .js,.jsx",
+    "format": "prettier --write \"src/**/*.{js,jsx,json,css}\"",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "lucide-react": "^0.263.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.0.8",
+    "tailwindcss": "^3.3.5",
+    "postcss": "^8.4.31",
+    "autoprefixer": "^10.4.16",
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "eslint": "^8.53.0",
+    "prettier": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/akbars-academy.git"
+  },
+  "keywords": [
+    "education",
+    "training",
+    "IT courses",
+    "programming",
+    "React",
+    "Tailwind CSS"
+  ],
+  "author": "Akbar's Academy IT Institute",
+  "license": "MIT"
+}
