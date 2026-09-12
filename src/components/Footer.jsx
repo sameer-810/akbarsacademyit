@@ -45,7 +45,7 @@ export const Footer = ({ onEnrollClick }) => {
               <div className="flex items-center gap-3">
                 <Mail size={20} className="text-amber-400 flex-shrink-0" />
                 <a href="mailto:info@akbarsacademy.com" className="hover:text-amber-400 transition">
-                  info@akbarsacademy.com
+                  support@akbarsacademy.com
                 </a>
               </div>
             </div>
