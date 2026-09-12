@@ -2,6 +2,8 @@ import { Phone, Mail, MapPin, Facebook, Linkedin, Twitter, Youtube } from 'lucid
 import { instituteData } from '../coursesData';
 
 export const Footer = ({ onEnrollClick }) => {
+  const mapEmbedUrl = import.meta.env.VITE_GOOGLE_MAPS_EMBED_URL || instituteData.mapEmbedUrl;
+
   return (
     <footer id="contact" className="bg-gray-900 text-white">
       {/* Admission Status Banner */}
@@ -129,7 +131,8 @@ export const Footer = ({ onEnrollClick }) => {
             <h4 className="text-lg font-bold mb-4">Find Us</h4>
             <div className="rounded-xl overflow-hidden shadow-lg h-96">
               <iframe
-                src={instituteData.mapEmbedUrl}
+                src={mapEmbedUrl}
+                title="Akbar's Academy location"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

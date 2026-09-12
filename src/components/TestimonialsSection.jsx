@@ -8,7 +8,7 @@ export const TestimonialsSection = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Success Stories from Our Alumni
+            Success Stories from Our Students
           </h2>
           <p className="text-lg text-gray-300">
             Hear directly from students who have transformed their careers with Akbar's Academy

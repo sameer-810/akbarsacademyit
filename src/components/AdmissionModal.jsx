@@ -30,25 +30,45 @@ export const AdmissionModal = ({ isOpen, onClose, selectedCourse = null }) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
-      console.log('Form submitted:', formData);
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
+    const enrollment = {
+      ...formData,
+      submittedAt: new Date().toISOString()
+    };
+    const webAppUrl = import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL;
 
-      // Reset after 2 seconds
-      setTimeout(() => {
-        setSubmitSuccess(false);
-        setFormData({
-          fullName: '',
-          phone: '',
-          email: '',
-          course: selectedCourse || '',
-          message: ''
+    try {
+      // A deployed Google Apps Script web app appends this data to the private Sheet.
+      // no-cors is required because Apps Script web apps do not return CORS headers.
+      if (webAppUrl) {
+        await fetch(webAppUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body: new URLSearchParams(enrollment).toString()
         });
-        onClose();
-      }, 2000);
-    }, 1000);
+      } else {
+        console.warn('Google Apps Script URL is not configured. Enrollment was not saved to Google Sheets.');
+      }
+
+      setSubmitSuccess(true);
+      const message = [
+        "Hi, I'd like to enroll at Akbar's Academy.",
+        `Name: ${enrollment.fullName}`,
+        `Phone: ${enrollment.phone}`,
+        enrollment.email && `Email: ${enrollment.email}`,
+        `Course: ${enrollment.course}`,
+        enrollment.message && `Message: ${enrollment.message}`
+      ].filter(Boolean).join('\n');
+
+      // Keep the visitor in the same tab so the WhatsApp handoff is not blocked.
+      window.location.assign(
+        `https://wa.me/${instituteData.whatsapp}?text=${encodeURIComponent(message)}`
+      );
+    } catch (error) {
+      console.error('Unable to submit enrollment:', error);
+      setIsSubmitting(false);
+      alert('We could not send your enrollment. Please try again or contact us on WhatsApp.');
+    }
   };
 
   const handleWhatsapp = () => {
