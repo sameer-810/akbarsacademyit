@@ -1,5 +1,5 @@
 const sizeClasses = {
-  sm: 'w-12 h-12',
+  sm: 'w-11 h-11',
   md: 'w-16 h-16',
   lg: 'w-20 h-20'
 };
@@ -22,11 +22,11 @@ export const LogoWithText = ({ size = 'lg' }) => {
   return (
     <div className="flex items-center gap-3">
       <AkbarsLogo size={size} />
-      <div className="flex flex-col">
-        <h1 className={`${textSizes[size] || textSizes.lg} font-bold text-gray-900`}>
+      <div className="flex flex-col leading-tight">
+        <span className={`${textSizes[size] || textSizes.lg} font-bold text-ink`}>
           Akbar's Academy
-        </h1>
-        <p className="text-xs text-gray-600">IT Institute</p>
+        </span>
+        <span className="text-xs text-gray-500">IT Institute, Mumbai</span>
       </div>
     </div>
   );

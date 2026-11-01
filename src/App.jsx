@@ -1,15 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Header } from './components/Header';
+import { LegalPage } from './components/LegalPage';
+import { legalPages } from './legalContent';
 import { Hero } from './components/Hero';
-import { AIMasterySection } from './components/AIMasterySection';
 import { CoursesGrid } from './components/CoursesGrid';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { AdmissionModal } from './components/AdmissionModal';
+import { SyllabusModal } from './components/SyllabusModal';
 import { Footer } from './components/Footer';
 
 function App() {
   const [showAdmissionModal, setShowAdmissionModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [syllabusCourse, setSyllabusCourse] = useState(null);
+  const [hash, setHash] = useState(window.location.hash);
+
+  // ponytail: hash router ("#/privacy-policy"); swap for react-router if real routes are ever needed
+  useEffect(() => {
+    const onHashChange = () => setHash(window.location.hash);
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  const legalPage = hash.startsWith('#/') ? legalPages[hash.slice(2)] : null;
+
+  // Section anchors (#courses) clicked from a legal page only exist after the home view renders.
+  useEffect(() => {
+    if (legalPage || hash.length < 2) return;
+    document.getElementById(hash.slice(1))?.scrollIntoView();
+  }, [hash, legalPage]);
 
   const handleEnrollClick = (course = null) => {
     setSelectedCourse(course);
@@ -30,28 +49,20 @@ function App() {
         onCourseClick={(course) => handleEnrollClick(course)}
       />
 
-      {/* Hero Section */}
-      <Hero
-        onEnrollClick={handleEnrollClick}
-        onAIMasteryClick={() => {
-          setSelectedCourse('AI Mastery');
-          handleEnrollClick('AI Mastery');
-        }}
-      />
+      {legalPage ? (
+        <LegalPage page={legalPage} />
+      ) : (
+        <>
+          {/* Hero Section */}
+          <Hero onEnrollClick={handleEnrollClick} />
 
-      {/* AI Mastery Section */}
-      <AIMasterySection
-        onEnrollClick={() => {
-          setSelectedCourse('AI Mastery');
-          handleEnrollClick('AI Mastery');
-        }}
-      />
+          {/* Courses Grid */}
+          <CoursesGrid onEnrollClick={handleEnrollClick} onSyllabusClick={setSyllabusCourse} />
 
-      {/* Courses Grid */}
-      <CoursesGrid onEnrollClick={handleEnrollClick} />
-
-      {/* Testimonials */}
-      <TestimonialsSection />
+          {/* Testimonials */}
+          <TestimonialsSection />
+        </>
+      )}
 
       {/* Footer */}
       <Footer onEnrollClick={handleEnrollClick} />
@@ -61,6 +72,13 @@ function App() {
         isOpen={showAdmissionModal}
         onClose={handleCloseModal}
         selectedCourse={selectedCourse}
+      />
+
+      {/* Syllabus Modal */}
+      <SyllabusModal
+        course={syllabusCourse}
+        onClose={() => setSyllabusCourse(null)}
+        onEnroll={handleEnrollClick}
       />
     </div>
   );

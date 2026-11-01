@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { X, MessageCircle, Loader } from 'lucide-react';
-import { courses, instituteData, aiMasteryCourse } from '../coursesData';
+import { X, MessageCircle, Loader, CheckCircle2, Phone } from 'lucide-react';
+import { courses, instituteData, bootcamp } from '../coursesData';
 
 export const AdmissionModal = ({ isOpen, onClose, selectedCourse = null }) => {
   const [formData, setFormData] = useState({
@@ -14,8 +14,8 @@ export const AdmissionModal = ({ isOpen, onClose, selectedCourse = null }) => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const allCourses = [
-    { value: 'ai-mastery', label: aiMasteryCourse.title },
-    ...courses.map(c => ({ value: c.title, label: c.title }))
+    ...courses.map(c => ({ value: c.title, label: c.title })),
+    { value: bootcamp.title, label: bootcamp.title }
   ];
 
   const handleChange = (e) => {
@@ -82,17 +82,17 @@ export const AdmissionModal = ({ isOpen, onClose, selectedCourse = null }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-ink/70 z-50 flex items-center justify-center p-4">
+      <div className="bg-paper rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6 flex items-center justify-between">
+        <div className="sticky top-0 bg-ink text-white p-6 flex items-center justify-between">
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold">Enroll Now</h2>
-            <p className="text-blue-100 text-sm mt-1">Start your learning journey today</p>
+            <h2 className="text-2xl md:text-3xl font-bold">Enquire about a course</h2>
+            <p className="text-white/70 text-sm mt-1">A counsellor replies on WhatsApp, usually the same day</p>
           </div>
           <button
             onClick={onClose}
-            className="bg-white bg-opacity-20 hover:bg-opacity-30 p-2 rounded-lg transition"
+            className="hover:bg-white/10 p-2 rounded-md transition-colors"
             aria-label="Close"
           >
             <X size={24} />
@@ -103,30 +103,30 @@ export const AdmissionModal = ({ isOpen, onClose, selectedCourse = null }) => {
         <div className="p-6 md:p-8">
           {submitSuccess ? (
             <div className="text-center py-12">
-              <div className="text-6xl mb-4">✅</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Success!</h3>
+              <CheckCircle2 size={56} className="text-brand mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-ink mb-2">Enquiry sent</h3>
               <p className="text-gray-600 text-lg mb-6">
-                Thank you for your interest. We'll contact you shortly!
+                Thank you. A counsellor will contact you shortly.
               </p>
               <p className="text-gray-500">
-                Redirecting you to WhatsApp for quick response...
+                Opening WhatsApp so you can continue the conversation there.
               </p>
             </div>
           ) : (
             <>
               {/* Quick WhatsApp CTA */}
-              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-6 mb-8">
-                <div className="flex items-center gap-4">
-                  <MessageCircle size={32} className="text-green-600 flex-shrink-0" />
+              <div className="bg-paper-2 border border-rule rounded-lg p-5 mb-8">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  <MessageCircle size={28} className="text-brand flex-shrink-0" />
                   <div className="flex-1">
-                    <p className="font-bold text-gray-900 mb-2">Get Instant Response</p>
-                    <p className="text-sm text-gray-600">Chat with our admission counselor on WhatsApp for instant guidance</p>
+                    <p className="font-semibold text-ink mb-1">In a hurry?</p>
+                    <p className="text-sm text-gray-600">Message the admission counsellor on WhatsApp instead of filling the form.</p>
                   </div>
                   <button
                     onClick={handleWhatsapp}
-                    className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-2 rounded-lg font-bold whitespace-nowrap transition transform hover:scale-105"
+                    className="border border-ink text-ink hover:bg-ink hover:text-white px-5 py-2.5 rounded-md font-semibold whitespace-nowrap transition-colors"
                   >
-                    Chat Now
+                    Open WhatsApp
                   </button>
                 </div>
               </div>
@@ -135,7 +135,7 @@ export const AdmissionModal = ({ isOpen, onClose, selectedCourse = null }) => {
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Full Name */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label className="block text-sm font-medium text-ink mb-1.5">
                     Full Name *
                   </label>
                   <input
@@ -145,13 +145,13 @@ export const AdmissionModal = ({ isOpen, onClose, selectedCourse = null }) => {
                     onChange={handleChange}
                     placeholder="Enter your full name"
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                    className="w-full px-4 py-3 border border-rule rounded-md bg-paper focus:border-brand focus:ring-0 outline-none transition-colors"
                   />
                 </div>
 
                 {/* Phone Number */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label className="block text-sm font-medium text-ink mb-1.5">
                     Phone Number *
                   </label>
                   <input
@@ -159,15 +159,15 @@ export const AdmissionModal = ({ isOpen, onClose, selectedCourse = null }) => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="+91 9876543210"
+                    placeholder="Your 10-digit mobile number"
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                    className="w-full px-4 py-3 border border-rule rounded-md bg-paper focus:border-brand focus:ring-0 outline-none transition-colors"
                   />
                 </div>
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label className="block text-sm font-medium text-ink mb-1.5">
                     Email Address
                   </label>
                   <input
@@ -176,13 +176,13 @@ export const AdmissionModal = ({ isOpen, onClose, selectedCourse = null }) => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="your.email@example.com"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                    className="w-full px-4 py-3 border border-rule rounded-md bg-paper focus:border-brand focus:ring-0 outline-none transition-colors"
                   />
                 </div>
 
                 {/* Course Selection */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label className="block text-sm font-medium text-ink mb-1.5">
                     Interested Course *
                   </label>
                   <select
@@ -190,7 +190,7 @@ export const AdmissionModal = ({ isOpen, onClose, selectedCourse = null }) => {
                     value={formData.course}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                    className="w-full px-4 py-3 border border-rule rounded-md bg-paper focus:border-brand focus:ring-0 outline-none transition-colors"
                   >
                     <option value="">-- Select a course --</option>
                     {allCourses.map(course => (
@@ -203,7 +203,7 @@ export const AdmissionModal = ({ isOpen, onClose, selectedCourse = null }) => {
 
                 {/* Message */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label className="block text-sm font-medium text-ink mb-1.5">
                     Message (Optional)
                   </label>
                   <textarea
@@ -212,52 +212,49 @@ export const AdmissionModal = ({ isOpen, onClose, selectedCourse = null }) => {
                     onChange={handleChange}
                     placeholder="Any specific questions or requirements?"
                     rows="4"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition resize-none"
+                    className="w-full px-4 py-3 border border-rule rounded-md bg-paper focus:border-brand focus:ring-0 outline-none transition-colors resize-none"
                   />
                 </div>
 
                 {/* Trust signals */}
-                <div className="bg-blue-50 p-4 rounded-lg text-sm text-gray-600">
-                  <p className="font-semibold text-gray-900 mb-2">Why Choose Us?</p>
-                  <ul className="space-y-1">
-                    <li>✓ 25 Years of Teaching Excellence</li>
-                    <li>✓ Industry Expert Instructors</li>
-                    <li>✓ 100% Job Placement Support</li>
-                  </ul>
-                </div>
+                <p className="text-sm text-gray-600 border-l-2 border-brand pl-3">
+                  We have taught in Cheeta Camp for 25 years. Enquiring is free, and there is no obligation to enrol.
+                </p>
 
                 {/* Submit Button */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-lg transition transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full bg-brand hover:bg-brand-600 text-white font-semibold py-3.5 px-6 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <>
                       <Loader size={20} className="animate-spin" />
-                      Processing...
+                      Sending
                     </>
                   ) : (
-                    'Submit Enrollment'
+                    'Send enquiry'
                   )}
                 </button>
 
                 {/* Terms */}
                 <p className="text-xs text-gray-500 text-center">
-                  By submitting, you agree to our terms and privacy policy
+                  By submitting, you agree to our{' '}
+                  <a href="#/terms-and-conditions" onClick={onClose} className="underline hover:text-brand">Terms &amp; Conditions</a>
+                  {' '}and{' '}
+                  <a href="#/privacy-policy" onClick={onClose} className="underline hover:text-brand">Privacy Policy</a>
                 </p>
               </form>
 
               {/* Direct Call CTA */}
-              <div className="mt-8 pt-8 border-t border-gray-200">
-                <p className="text-center text-gray-600 mb-4">
-                  Prefer to talk directly? Call us now!
-                </p>
+              <div className="mt-8 pt-6 border-t border-rule flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <p className="text-gray-600">Prefer to talk? Call the office.</p>
                 <a
                   href={`tel:${instituteData.phone}`}
-                  className="block bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-lg text-center transition"
+                  className="inline-flex items-center gap-2 font-semibold text-ink hover:text-brand transition-colors"
                 >
-                  📞 Call: {instituteData.phone}
+                  <Phone size={16} />
+                  {instituteData.phone}
                 </a>
               </div>
             </>
